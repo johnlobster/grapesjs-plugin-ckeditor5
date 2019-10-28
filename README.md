@@ -12,7 +12,8 @@ This plugin replaces the default Rich Text Editor with CKEditor5 inline build
       * `options` CKEditor5's configuration object, eg. `{ language: 'en', toolbar: [...], ...}`
       * `position` Position side of the toolbar, default: `left`, options: `left|center|right`
 
-
+Ckeditor5 information can be found at https://ckeditor.com/docs/ckeditor5/latest/  
+This plugin uses v15.0.0
 
 ## Download
 
@@ -24,6 +25,7 @@ This plugin replaces the default Rich Text Editor with CKEditor5 inline build
 ## Usage
 
 ```html
+<script src="https://cdn.ckeditor.com/ckeditor5/15.0.0/inline/ckeditor.js"></script>
 <link href="path/to/grapes.min.css" rel="stylesheet"/>
 <script src="path/to/grapes.min.js"></script>
 <script src="path/to/grapesjs-plugin-ckeditor.min.js"></script>
