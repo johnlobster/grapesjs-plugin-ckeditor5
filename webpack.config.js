@@ -15,25 +15,30 @@ module.exports = (env = {}) => {
     const index = 'index.html';
     const indexDev = '_' + index;
     plugins.push(new HtmlWebpackPlugin({
-      template: fs.existsSync(indexDev) ? indexDev : index
+      template: fs.existsSync(indexDev) ? indexDev : index,
+      inject: false
     }));
   }
 
   return {
+    mode: "development",
     entry: './src',
     output: {
         filename: `./dist/${name}.min.js`,
         library: name,
         libraryTarget: 'umd',
     },
-    module: {
-      loaders: [{
-          test: /\.js$/,
-          loader: 'babel-loader',
-          include: /src/,
-      }],
+    devtool: 'eval-source-map',
+    // module: {
+    //   rules: [{
+    //     test: /\.js$/,
+    //     use: [ 'babel-loader']
+    //   }]
+    // },
+    externals: {
+      'ckeditor5': 'ckeditor5',
+      'grapesjs': 'grapesjs'
     },
-    externals: {'grapesjs': 'grapesjs'},
     plugins: plugins,
   };
 }

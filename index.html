@@ -97,26 +97,23 @@
       // .catch( error => {
       //   console.error(error);
       // } );
-      // var editor = grapesjs.init({
-      //   height: '100%',
-      //   noticeOnUnload: 0,
-      //   storageManager: { autoload: 0 },
-      //   container: '#gjs',
-      //   fromElement: true,
-
+      let editor = grapesjs.init({
+        height: '100%',
+        noticeOnUnload: 0,
+        storageManager: { autoload: 0 },
+        container: '#gjs',
+        fromElement: true,
+        plugins: ['gjs-plugin-ckeditor5']
+        // pluginsOpts: {
+        //   'gjs-plugin-ckeditor5': {
+        //     position: 'center',
+        //     options: {
+        //       language: 'en'
+        //     }
+        // }
         
-      // });
+      });
+
     </script>
   </body>
 </html>
-
-<!-- plugins: ['gjs-plugin-ckeditor'],
-pluginsOpts: {
-'gjs-plugin-ckeditor': {
-position: 'center',
-options: {
-language: 'en',
-//skin: 'moono-dark',
-}
-}
-} -->
