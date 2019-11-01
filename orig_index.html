@@ -7,7 +7,7 @@
     <script src="https://unpkg.com/grapesjs"></script>
     <script
       src="https://cdn.ckeditor.com/ckeditor5/15.0.0/inline/ckeditor.js"></script>
-    <script src="dist/grapesjs-plugin-ckeditor5.min.js"></script>
+    <!-- <script src="dist/grapesjs-plugin-ckeditor5.min.js"></script> -->
     <style>
       body,
       html {
@@ -77,35 +77,18 @@
         }
       </style>
     </div>
-    <div style="font-size: 300%;">
-      <div id="editor">
-        Some sample text
-      </div>
-      <h2 id="editor2">Hello</h2>
-      <p>More text</p>
-      <p>Another paragraph</p>
-    </div>
-    
 
 
     <script>
-      // let eddi = InlineEditor
-      // .create( document.querySelector( '#editor2' ) )
-      // .then(()=> {
-      //   console.log("Built editor");
-      // })
-      // .catch( error => {
-      //   console.error(error);
-      // } );
-      // var editor = grapesjs.init({
-      //   height: '100%',
-      //   noticeOnUnload: 0,
-      //   storageManager: { autoload: 0 },
-      //   container: '#gjs',
-      //   fromElement: true,
+      var editor = grapesjs.init({
+        height: '100%',
+        noticeOnUnload: 0,
+        storageManager: { autoload: 0 },
+        container: '#gjs',
+        fromElement: true,
 
         
-      // });
+      });
     </script>
   </body>
 </html>

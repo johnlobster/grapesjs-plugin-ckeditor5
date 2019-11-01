@@ -20,8 +20,8 @@ export default grapesjs.plugins.add('gjs-plugin-ckeditor', (editor, opts = {}) =
       c[name] = defaults[name];
   }
 
-  if (!CKEDITOR) {
-    throw new Error('CKEDITOR instance not found');
+  if (!InlineEditor) {
+    throw new Error('ckeditor5 InlineEditor instance not found, check cdn load');
   }
 
   editor.setCustomRte({
@@ -34,16 +34,16 @@ export default grapesjs.plugins.add('gjs-plugin-ckeditor', (editor, opts = {}) =
 
       el.contentEditable = true;
 
-      // Seems like 'sharedspace' plugin doesn't work exactly as expected
-      // so will help hiding other toolbars already created
-      let rteToolbar = editor.RichTextEditor.getToolbarEl();
-      [].forEach.call(rteToolbar.children, (child) => {
-      	child.style.display = 'none';
-      });
+      // // Seems like 'sharedspace' plugin doesn't work exactly as expected
+      // // so will help hiding other toolbars already created
+      // let rteToolbar = editor.RichTextEditor.getToolbarEl();
+      // [].forEach.call(rteToolbar.children, (child) => {
+      // 	child.style.display = 'none';
+      // });
 
       // Check for the mandatory options
       var opt = c.options;
-      var plgName = 'sharedspace';
+      // var plgName = 'sharedspace';
 
       if (opt.extraPlugins) {
         if (typeof opt.extraPlugins === 'string')
@@ -58,10 +58,18 @@ export default grapesjs.plugins.add('gjs-plugin-ckeditor', (editor, opts = {}) =
         c.options.sharedSpaces = {top: rteToolbar};
       }
 
-      // Init CkEditors
-      rte = CKEDITOR.inline(el, c.options);
+      // Init CkEditor5 inline build
+      rte = InlineEditor.create(el, c.options)
+      .then(()=> {
+        console.log("ckeditor created on element " + el)
+      })
+      .catch( (err) => {
+        console.log("Error opening ckeditor on element " + el);
+        console.log(err);
+      });
+      
 
-      // Make click event propogate
+      // Make click event propagate
       rte.on('contentDom', () => {
         var editable = rte.editable();
         editable.attachListener(editable, 'click', () => {
@@ -69,16 +77,17 @@ export default grapesjs.plugins.add('gjs-plugin-ckeditor', (editor, opts = {}) =
         });
       });
 
-      // The toolbar is not immediatly loaded so will be wrong positioned.
+      // The toolbar is not immediately loaded so will be wrong positioned.
       // With this trick we trigger an event which updates the toolbar position
-      rte.on('instanceReady', e => {
-        var toolbar = rteToolbar.querySelector('#cke_' + rte.name);
-        if (toolbar) {
-          toolbar.style.display = 'block';
-        }
-        editor.trigger('canvasScroll')
-      });
+      // rte.on('instanceReady', e => {
+      //   var toolbar = rteToolbar.querySelector('#cke_' + rte.name);
+      //   if (toolbar) {
+      //     toolbar.style.display = 'block';
+      //   }
+      //   editor.trigger('canvasScroll')
+      // });
 
+      // TODO Do we need this ?
       // Prevent blur when some of CKEditor's element is clicked
       rte.on('dialogShow', e => {
         const editorEls = grapesjs.$('.cke_dialog_background_cover, .cke_dialog');
@@ -107,28 +116,28 @@ export default grapesjs.plugins.add('gjs-plugin-ckeditor', (editor, opts = {}) =
     },
   });
 
-  // Update RTE toolbar position
-  editor.on('rteToolbarPosUpdate', (pos) => {
-    // Update by position
-    switch (c.position) {
-      case 'center':
-        let diff = (pos.elementWidth / 2) - (pos.targetWidth / 2);
-        pos.left = pos.elementLeft + diff;
-        break;
-      case 'right':
-        let width = pos.targetWidth;
-        pos.left = pos.elementLeft + pos.elementWidth - width;
-        break;
-    }
+  // // Update RTE toolbar position
+  // editor.on('rteToolbarPosUpdate', (pos) => {
+  //   // Update by position
+  //   switch (c.position) {
+  //     case 'center':
+  //       let diff = (pos.elementWidth / 2) - (pos.targetWidth / 2);
+  //       pos.left = pos.elementLeft + diff;
+  //       break;
+  //     case 'right':
+  //       let width = pos.targetWidth;
+  //       pos.left = pos.elementLeft + pos.elementWidth - width;
+  //       break;
+  //   }
 
-    if (pos.top <= pos.canvasTop) {
-      pos.top = pos.elementTop + pos.elementHeight;
-    }
+  //   if (pos.top <= pos.canvasTop) {
+  //     pos.top = pos.elementTop + pos.elementHeight;
+  //   }
 
-    // Check if not outside of the canvas
-    if (pos.left < pos.canvasLeft) {
-      pos.left = pos.canvasLeft;
-    }
-  });
+  //   // Check if not outside of the canvas
+  //   if (pos.left < pos.canvasLeft) {
+  //     pos.left = pos.canvasLeft;
+  //   }
+  // });
 
 });

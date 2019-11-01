@@ -1,7 +1,7 @@
 {
   "name": "grapesjs-plugin-ckeditor5",
   "version": "0.1.0",
-  "description": "Replace the built-in RTE with CKEditor5 inline build",
+  "description": "Replace the built-in RTE with CKEditor5 inline build, tested on ckeditor5 15.0.0",
   "main": "dist/grapesjs-plugin-ckeditor5.min.js",
   "scripts": {
     "lint": "eslint src",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/johnlobster/grapesjs-plugin-ckeditor.git"
+    "url": "https://github.com/johnlobster/grapesjs-plugin-ckeditor5.git"
   },
   "keywords": [
     "grapesjs",
